@@ -1,0 +1,11 @@
+
+CRUD Teacher with Model
+
+search, pagination
+
+
+#Front End, Localizations
+ - changing languages
+resource/ lang/ mm/ ...
+
+In route, middleware
