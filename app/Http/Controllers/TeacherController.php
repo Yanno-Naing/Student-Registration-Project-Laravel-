@@ -74,7 +74,7 @@ class TeacherController extends Controller
 
             DB::commit();
             return response()->json(['status'=>'OK', 'message'=>'Created Successfully!'],200);
-        }catch(Exception $e){
+        }catch(\Exception $e){
             DB::rollBack();
             Log::debug($e->getMessage());
             return response()->json(['status'=>'NG','message'=>'Fail to save!'],200);
@@ -92,8 +92,8 @@ class TeacherController extends Controller
                 }])->first();
                 //dd($result);
             $result->avatar = asset('storage/'.$result->avatar);
+            
             return response()->json(['status'=>'OK', 'data'=>$result],200);
-
         }else{
             return response()->json(['status'=>'NG','message'=>'Student Record does not exist!'],200);
         }
@@ -168,7 +168,7 @@ class TeacherController extends Controller
     
                 DB::commit();
                 return response()->json(['status'=>'OK', 'message'=>'Updated Successfully!'],200);
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 DB::rollBack();
                 Log::debug($e->getMessage());
                 return response()->json(['status'=>'NG','message'=>'Fail to update!'],200);
@@ -190,8 +190,8 @@ class TeacherController extends Controller
                 TeachersSkill::where('teacher_id',$teacherId)->delete();
 
                 return response()->json(['status'=>'OK', 'message'=>'Deleted Successfully!'],200);
-            } catch (Exception $e) {
-                Log::debug($e->message());
+            } catch (\Exception $e) {
+                Log::debug($e->getMessage());
                 return response()->json(['status'=>'NG','message'=>'Fail to delete!'],200);
             }
         }else{

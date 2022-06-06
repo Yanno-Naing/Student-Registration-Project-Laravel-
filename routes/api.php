@@ -47,3 +47,22 @@ Route::delete('/teachers/delete/{teacherId}', 'TeacherController@delete');
 
 Route::get('/teachers/search', 'TeacherController@search');
 
+
+# Testing Repository Patten Class sample
+
+Route::get('/classes', 'ClassController@index');
+
+Route::post('/classes/register', 'ClassController@store');
+
+Route::put('/classes/update/{classId}', 'ClassController@update');
+
+Route::get('/classes/detail/{classId}', 'ClassController@classDetailQuerys');
+
+Route::delete('/classes/delete/{classId}', 'ClassController@delete');
+
+
+#Excel export and import
+
+Route::get('export', 'ExcelController@export')->name('export');
+Route::get('importExportView', 'ExcelController@importExportView');
+Route::post('import', 'ExcelController@import')->name('import');

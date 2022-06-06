@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StudentRequest;
+use App\Interfaces\StudentRepositoryInterface;
 
 class StudentController extends Controller
 {
+    private StudentRepositoryInterface $studentRepository;
+
+    public function __construct(StudentRepositoryInterface $studentRepository)
+    {
+        $this->studentRepository = $studentRepository;
+    }
     
     public function register(StudentRequest $request)
     {
@@ -72,7 +79,7 @@ class StudentController extends Controller
 
             DB::commit();
             return response()->json(['status'=>'OK', 'message'=>'Created Successfully!'],200);
-        }catch(Exception $e){
+        }catch(\Exception $e){
             DB::rollBack();
             Log::debug($e->getMessage());
             return response()->json(['status'=>'NG','message'=>'Fail to save!'],200);
@@ -83,7 +90,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = DB::table('students')->get();
-        Log::info($studets);
+        Log::info($students);
     }
 
     public function studentDetailQuerys ( $studentId )
@@ -167,7 +174,7 @@ class StudentController extends Controller
 
             DB::commit();
             return response()->json(['status'=>'OK', 'message'=>'Updated Successfully!'],200);
-        } catch(Exception $e){
+        } catch(\Exception $e){
             DB::rollBack();
             Log::debug($e->getMessage());
             return response()->json(['status'=>'NG','message'=>'Fail to update!'],200);
@@ -186,9 +193,9 @@ class StudentController extends Controller
                 DB::table('student_skills')->where('student_id',$studentId)->delete();
                 DB::commit();
                 return response()->json(['status'=>'OK', 'message'=>'Deleted Successfully!'],200);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollBack();
-                Log::debug($e->message());
+                Log::debug($e->getMessage());
                 return response()->json(['status'=>'NG','message'=>'Fail to delete!'],200);
             }
         }else{

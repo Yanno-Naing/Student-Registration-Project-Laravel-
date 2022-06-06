@@ -8,4 +8,16 @@ search, pagination
  - changing languages
 resource/ lang/ mm/ ...
 
-In route, middleware
+In web route, middleware
+
+
+RepositoryInterface, Repository,
+RepositoryServiceProvider - bind interface with repo class
+declare provider in config/app.php provider val 
+Controller Integration
+
+Excel Export/Import    https://www.laravelcode.com/post/import-and-export-excel-file-in-laravel-7
+install package
+Exports/ StudentsExport
+Imports/ StudentsImport
+ExcelController
