@@ -1,5 +1,6 @@
 <?php
 
+use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +67,29 @@ Route::delete('/classes/delete/{classId}', 'ClassController@delete');
 Route::get('export', 'ExcelController@export')->name('export');
 Route::get('importExportView', 'ExcelController@importExportView');
 Route::post('import', 'ExcelController@import')->name('import');
+
+Route::get('export-list', function(){
+    $result =Student::with(['skills'=>function($query){
+        $query->select('skills.name');
+    }])->get();
+
+    // foreach($result as $row){
+    //     $arr = array();
+    //         //Arr::pluck($row, 'skills.name')
+    //     foreach($row->skills as $skill){
+    //         array_push($arr, $skill->name);
+    //     }
+    //         //implode(',', $arr)
+    //     $row->skills_string = $arr;
+    // }
+
+    $result->each(function ($row){
+        $skill = $row->skills->mapToGroups(function ($item, $key){
+            return [$item['name']];
+        })->collapse();
+        $row->skill = $skill;
+    });
+
+    //dd($result);
+    return response()->json($result);
+});
